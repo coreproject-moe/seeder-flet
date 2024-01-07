@@ -1,2 +1,2 @@
-# seeder-flet
-Seeder GUI with Flet
+# coreproject-seeder-flet
+Seeder GUI for CoreProject with Flet
