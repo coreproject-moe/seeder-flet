@@ -7,8 +7,9 @@ def main(page: ft.Page):
     page.padding = 0
     # configure custom fonts
     page.fonts = {
-        "Kokoro-Bold": "fonts/Kokoro/Bold.ttf",
+        "Kokoro": "fonts/Kokoro/Regular.ttf",
         "Kokoro-Medium": "fonts/Kokoro/Medium.ttf",
+        "Kokoro-Bold": "fonts/Kokoro/Bold.ttf",
     }
 
     page.appbar = ft.AppBar(

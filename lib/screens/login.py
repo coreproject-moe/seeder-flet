@@ -26,7 +26,7 @@ class LoginScreen(ft.GridView):
                 ft.Column([
                     ft.Container(
                         content=ft.Column([
-                            ft.Text(value="DoodStream", font_family="Kokoro-Medium", size=17),
+                            ft.Text(value="DoodStream", font_family="Kokoro-Medium", size=16),
                             ft.TextField(
                                 label="DoodStream Token",
                                 border_color=ft.colors.BLUE_700,
@@ -38,7 +38,7 @@ class LoginScreen(ft.GridView):
                                 height=50,
                                 prefix_icon=ft.icons.ABC,
                             ),
-                            ft.Text(value="Insert your unique API token here to unlock the full potential of Streamsb's video services", font_family="Kokoro-Medium", size=12)
+                            ft.Text(value="Insert your unique API token here to unlock the full potential of Streamsb's video services", font_family="Kokoro", size=12)
                         ], spacing=2)
                     )
                 ])
