@@ -29,14 +29,14 @@ class LoginScreen(ft.GridView):
                             ft.Text(value="DoodStream", font_family="Kokoro-Medium", size=16),
                             ft.TextField(
                                 label="DoodStream Token",
+                                label_style=ft.TextStyle(size=15),
                                 border_color=ft.colors.BLUE_700,
                                 border_width=2,
-                                label_style=ft.TextStyle(size=15),
-                                focused_border_color=ft.colors.BLUE_500,
                                 border_radius=10,
+                                focused_border_color=ft.colors.BLUE_400,
                                 text_size=15,
                                 height=50,
-                                prefix_icon=ft.icons.ABC,
+                                prefix_icon=ft.icons.TOKEN,
                             ),
                             ft.Text(value="Insert your unique API token here to unlock the full potential of Streamsb's video services", font_family="Kokoro", size=12)
                         ], spacing=2)
