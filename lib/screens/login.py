@@ -14,6 +14,25 @@ class LoginScreen(ft.GridView):
         self.__create_view__()
 
     def __create_form__(self) -> ft.Container:
+        def handle_change(e):
+            continue_btn.disabled = len(e.control.value) < 8
+            continue_btn.update()
+
+
+        continue_btn = ft.ElevatedButton(
+            text="Continue",
+            icon=ft.icons.ARROW_RIGHT_ALT,
+            bgcolor=ft.colors.BLUE_700,
+            color=ft.colors.WHITE,
+            height=45,
+            style=ft.ButtonStyle(
+                shape={
+                    ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=8)
+                },
+            ),
+            disabled=True,
+        )
+
         return ft.Container(
             padding=50,
             content=ft.Column([
@@ -40,23 +59,13 @@ class LoginScreen(ft.GridView):
                                 prefix_icon=ft.icons.TOKEN,
                                 helper_text="Insert your unique API token here to unlock the full potential of DoodStream's video services",
                                 helper_style=ft.Text(font_family="Kokoro", size=12),
+                                # event
+                                on_change=handle_change,
                             ),
                         ], spacing=2)
                     )
                 ]),
-                ft.ElevatedButton(
-                    text="Continue",
-                    icon=ft.icons.ARROW_RIGHT_ALT,
-                    bgcolor=ft.colors.BLUE_700,
-                    color=ft.colors.WHITE,
-                    height=45,
-                    style=ft.ButtonStyle(
-                        shape={
-                            ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=8)
-                        },
-                    ),
-                    disabled=True,
-                )
+                continue_btn,
             ], spacing=50)
         )
     
