@@ -35,10 +35,11 @@ class LoginScreen(ft.GridView):
                                 border_radius=10,
                                 focused_border_color=ft.colors.BLUE_400,
                                 text_size=15,
-                                height=50,
+                                height=75,
                                 prefix_icon=ft.icons.TOKEN,
+                                helper_text="Insert your unique API token here to unlock the full potential of Streamsb's video services",
+                                helper_style=ft.Text(font_family="Kokoro", size=12),
                             ),
-                            ft.Text(value="Insert your unique API token here to unlock the full potential of Streamsb's video services", font_family="Kokoro", size=12)
                         ], spacing=2)
                     )
                 ])
