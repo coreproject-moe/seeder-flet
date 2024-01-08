@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "coreproject-seeder-flet"
+version = "0.1.0"
+description = "Seeder GUI for CoreProject with Flet"
+authors = ["tokitouq <tokitousan2005@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flet = "^0.18.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
