@@ -1,5 +1,6 @@
 import flet as ft
 from lib.views.login import LoginView
+from lib.views.upload import UploadView
 
 def main(page: ft.Page):
     page.window_frameless = True
@@ -23,12 +24,28 @@ def main(page: ft.Page):
                         center_title=True,
                         bgcolor = "#03020c",
                     ),
-                    LoginView()
+                    LoginView(page)
                 ],
                 bgcolor="#03020c",
                 padding=0,
             )
         )
+        if page.route == "/upload":
+            page.views.append(
+                ft.View(
+                    "/",
+                    [
+                        ft.AppBar(
+                            title=ft.Image(src="/icons/logo.png", height=25),
+                            center_title=True,
+                            bgcolor = "#03020c",
+                        ),
+                        UploadView()
+                    ],
+                    bgcolor="#03020c",
+                    padding=0,
+                )
+            )
         page.update()
     
     def view_pop(view):

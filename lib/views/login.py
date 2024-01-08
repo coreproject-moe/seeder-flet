@@ -1,8 +1,9 @@
 import flet as ft
 
 class LoginView(ft.GridView):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, page: ft.Page, *args, **kwargs):
         super(LoginView, self).__init__(*args, **kwargs)
+        self.page = page
         # Tokens
         self.doodstream_token = ""
         # grid config
@@ -31,6 +32,7 @@ class LoginView(ft.GridView):
                 },
             ),
             disabled=True,
+            on_click=lambda _: self.page.go("/upload"),
         )
 
         return ft.Container(
