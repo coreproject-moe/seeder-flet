@@ -1,6 +1,5 @@
 import flet as ft
-from lib.views.login import LoginView
-from lib.views.upload import UploadView
+from lib.views import LoginView, UploadView
 
 def main(page: ft.Page):
     page.window_frameless = True
