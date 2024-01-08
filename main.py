@@ -4,6 +4,11 @@ from lib.screens.login import LoginScreen
 def main(page: ft.Page):
     page.window_frameless = True
     page.bgcolor = "#03020c"
+    # configure custom fonts
+    page.fonts = {
+        "Kokoro-Bold": "fonts/Kokoro/Bold.ttf",
+        "Kokoro-Medium": "fonts/Kokoro/Medium.ttf",
+    }
 
     page.appbar = ft.AppBar(
         leading=ft.Icon(ft.icons.UPLOAD),
