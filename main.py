@@ -11,6 +11,7 @@ def main(page: ft.Page):
         "Kokoro-Medium": "fonts/Kokoro/Medium.ttf",
         "Kokoro-Bold": "fonts/Kokoro/Bold.ttf",
     }
+    page.theme = ft.Theme(font_family="Kokoro")
 
     page.appbar = ft.AppBar(
         title=ft.Image(src="/icons/logo.png", height=25),
