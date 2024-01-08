@@ -43,7 +43,20 @@ class LoginScreen(ft.GridView):
                             ),
                         ], spacing=2)
                     )
-                ])
+                ]),
+                ft.ElevatedButton(
+                    text="Continue",
+                    icon=ft.icons.ARROW_RIGHT_ALT,
+                    bgcolor=ft.colors.BLUE_700,
+                    color=ft.colors.WHITE,
+                    height=45,
+                    style=ft.ButtonStyle(
+                        shape={
+                            ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=8)
+                        },
+                    ),
+                    disabled=True,
+                )
             ], spacing=50)
         )
     
