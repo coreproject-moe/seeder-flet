@@ -1,8 +1,8 @@
 import flet as ft
 
-class LoginScreen(ft.GridView):
+class LoginView(ft.GridView):
     def __init__(self, *args, **kwargs):
-        super(LoginScreen, self).__init__(*args, **kwargs)
+        super(LoginView, self).__init__(*args, **kwargs)
         # Tokens
         self.doodstream_token = ""
         # grid config
