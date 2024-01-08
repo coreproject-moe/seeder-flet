@@ -1,10 +1,9 @@
 import flet as ft
-from lib.screens.login import LoginScreen
+from lib.views.login import LoginView
+from lib.views.upload import UploadView
 
 def main(page: ft.Page):
     page.window_frameless = True
-    page.bgcolor = "#03020c"
-    page.padding = 0
     # configure custom fonts
     page.fonts = {
         "Kokoro": "fonts/Kokoro/Regular.ttf",
@@ -13,13 +12,49 @@ def main(page: ft.Page):
     }
     page.theme = ft.Theme(font_family="Kokoro")
 
-    page.appbar = ft.AppBar(
-        title=ft.Image(src="/icons/logo.png", height=25),
-        center_title=True,
-        bgcolor = "#03020c",
-    )
+    # views
+    def route_change(route):
+        page.views.clear()
+        page.views.append(
+            ft.View(
+                "/",
+                [
+                    ft.AppBar(
+                        title=ft.Image(src="/icons/logo.png", height=25),
+                        center_title=True,
+                        bgcolor = "#03020c",
+                    ),
+                    LoginView(page)
+                ],
+                bgcolor="#03020c",
+                padding=0,
+            )
+        )
+        if page.route == "/upload":
+            page.views.append(
+                ft.View(
+                    "/",
+                    [
+                        ft.AppBar(
+                            title=ft.Image(src="/icons/logo.png", height=25),
+                            center_title=True,
+                            bgcolor = "#03020c",
+                        ),
+                        UploadView()
+                    ],
+                    bgcolor="#03020c",
+                    padding=0,
+                )
+            )
+        page.update()
     
-    page.add(LoginScreen())
-    page.update()
+    def view_pop(view):
+        page.views.pop()
+        top_view = page.views[-1]
+        page.go(top_view.route)
 
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+    page.go(page.route)
+    
 ft.app(target=main, assets_dir="assets/")
