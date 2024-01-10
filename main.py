@@ -1,5 +1,6 @@
 import flet as ft
 from lib.views import LoginView, UploadView
+from lib.components.appbar import custom_appbar
 
 def main(page: ft.Page):
     page.window_title_bar_hidden = True
@@ -19,11 +20,7 @@ def main(page: ft.Page):
             ft.View(
                 "/",
                 [
-                    ft.AppBar(
-                        title=ft.Image(src="/icons/logo.png", height=25),
-                        center_title=True,
-                        bgcolor = "#03020c",
-                    ),
+                    custom_appbar(),
                     LoginView(page)
                 ],
                 bgcolor="#03020c",
@@ -35,10 +32,7 @@ def main(page: ft.Page):
                 ft.View(
                     "/",
                     [
-                        ft.AppBar(
-                            title=ft.Image(src="/icons/logo.png", height=25),
-                            center_title=True,
-                            bgcolor = "#03020c",
+                        custom_appbar(
                             automatically_imply_leading=False,
                             leading=ft.IconButton(
                                 icon=ft.icons.ARROW_BACK,
