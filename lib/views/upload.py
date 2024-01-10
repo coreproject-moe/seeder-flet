@@ -95,10 +95,10 @@ class UploadView(ft.Column):
                 show_checkbox_column=True,
                 columns=[
                     ft.DataColumn(
-                        ft.Text("Name")
+                        ft.Text("File Name")
                     ),
                     ft.DataColumn(
-                        ft.Text("Size"),
+                        ft.Text("File Size"),
                         numeric=True,
                     ),
                 ],
@@ -118,7 +118,10 @@ class UploadView(ft.Column):
                 ),
                 padding=ft.padding.symmetric(horizontal=100, vertical=25),
             ),
-            ft.Divider(),
+            ft.Container(
+                content=ft.Divider(),
+                padding=ft.padding.symmetric(horizontal=50),
+            ),
             ft.Container(
                 content=self.__create_data_table__(),
                 padding=ft.padding.symmetric(horizontal=50, vertical=25),
