@@ -5,7 +5,9 @@ class LoginView(ft.GridView):
         super(LoginView, self).__init__(*args, **kwargs)
         self.page = page
         # Tokens
-        self.doodstream_token = ""
+        self.tokens = {
+            "doodstream": "",
+        }
         # grid config
         self.expand = 1
         self.spacing = 10
@@ -15,9 +17,14 @@ class LoginView(ft.GridView):
         self.__create_view__()
 
     def __create_form__(self) -> ft.Container:
-        def handle_change(e):
+        def handle_change(e, provider: str):
+            self.tokens[provider] = e.control.value
             continue_btn.disabled = len(e.control.value) < 8
             continue_btn.update()
+
+        def handle_submit(e):
+            self.page.client_storage.set("tokens", self.tokens)
+            self.page.go("/upload")
 
 
         continue_btn = ft.ElevatedButton(
@@ -32,7 +39,7 @@ class LoginView(ft.GridView):
                 },
             ),
             disabled=True,
-            on_click=lambda _: self.page.go("/upload"),
+            on_click=handle_submit,
         )
 
         return ft.Container(
@@ -62,7 +69,7 @@ class LoginView(ft.GridView):
                                 helper_text="Insert your unique API token here to unlock the full potential of DoodStream's video services",
                                 helper_style=ft.Text(font_family="Kokoro", size=12),
                                 # event
-                                on_change=handle_change,
+                                on_change=lambda e: handle_change(e, provider="doodstream"),
                             ),
                         ], spacing=2)
                     )

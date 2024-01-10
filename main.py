@@ -11,23 +11,29 @@ def main(page: ft.Page):
         "Kokoro-Medium": "fonts/Kokoro/Medium.ttf",
         "Kokoro-Bold": "fonts/Kokoro/Bold.ttf",
     }
-    page.theme = ft.Theme(font_family="Kokoro")
+    page.theme = ft.Theme(
+        font_family="Kokoro",
+        color_scheme=ft.ColorScheme(
+            tertiary_container="#1E2036"
+        )
+    )
+    page.update()
 
     # views
     def route_change(route):
         page.views.clear()
-        page.views.append(
-            ft.View(
-                "/",
-                [
-                    custom_appbar(),
-                    LoginView(page)
-                ],
-                bgcolor="#03020c",
-                padding=0,
-            )
-        )
-        if page.route == "/upload":
+        # page.views.append(
+        #     ft.View(
+        #         "/",
+        #         [
+        #             custom_appbar(),
+        #             LoginView(page)
+        #         ],
+        #         bgcolor="#03020c",
+        #         padding=0,
+        #     )
+        # )
+        if page.route == "/":
             page.views.append(
                 ft.View(
                     "/",
@@ -42,7 +48,7 @@ def main(page: ft.Page):
                                 on_click=lambda _: page.go("/"),
                             ),
                         ),
-                        UploadView()
+                        UploadView(page)
                     ],
                     bgcolor="#03020c",
                     padding=0,
