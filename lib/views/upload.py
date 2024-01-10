@@ -13,15 +13,25 @@ class UploadView(ft.Column):
         # refs
         self.total_files_ref = ft.Ref[ft.Text]()
         self.total_size_ref = ft.Ref[ft.Text]()
+        self.data_table_ref = ft.Ref[ft.DataTable]()
 
         self.__create_view__()
 
     def __pick_files_result(self, e: ft.FilePickerResultEvent):
-        total_files = len(e.files)
+        files = len(e.files)
         total_size = sum(file.size for file in e.files)
 
-        self.total_files_ref.current.value = f"{total_files} files"
+        self.total_files_ref.current.value = f"{files} files"
         self.total_size_ref.current.value = size(total_size)
+        
+        for file in e.files:
+            self.data_table_ref.current.rows.append(
+                ft.DataRow([
+                    ft.DataCell(ft.Text(value=file.name)),
+                    ft.DataCell(ft.Text(size(file.size))),
+                ])
+            )
+
         self.page.update()
 
     def __create_upload_status__(self):
@@ -75,6 +85,26 @@ class UploadView(ft.Column):
             on_click=lambda _: self.file_picker.pick_files(allow_multiple=True),
         )
 
+    def __create_data_table__(self):
+        return ft.Container(
+            content=ft.DataTable(
+                ref=self.data_table_ref,
+                sort_column_index=0,
+                sort_ascending=True,
+                heading_row_color=ft.colors.SECONDARY,
+                show_checkbox_column=True,
+                columns=[
+                    ft.DataColumn(
+                        ft.Text("Name")
+                    ),
+                    ft.DataColumn(
+                        ft.Text("Size"),
+                        numeric=True,
+                    ),
+                ],
+            ),
+        )
+
     def __create_view__(self):
         self.controls = [
             ft.Container(
@@ -87,5 +117,10 @@ class UploadView(ft.Column):
                     alignment=ft.MainAxisAlignment.CENTER,
                 ),
                 padding=ft.padding.symmetric(horizontal=100, vertical=25),
+            ),
+            ft.Divider(),
+            ft.Container(
+                content=self.__create_data_table__(),
+                padding=ft.padding.symmetric(horizontal=50, vertical=25),
             )
         ]

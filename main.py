@@ -14,7 +14,8 @@ def main(page: ft.Page):
     page.theme = ft.Theme(
         font_family="Kokoro",
         color_scheme=ft.ColorScheme(
-            tertiary_container="#1E2036"
+            tertiary_container="#1E2036",
+            secondary="#03020c",
         )
     )
     page.update()
