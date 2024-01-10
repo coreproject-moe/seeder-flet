@@ -1,4 +1,5 @@
 import flet as ft
+from hurry.filesize import size
 
 class UploadView(ft.Column):
     def __init__(self, page: ft.Page, *args, **kwargs):
@@ -20,7 +21,7 @@ class UploadView(ft.Column):
         total_size = sum(file.size for file in e.files)
 
         self.total_files_ref.current.value = f"{total_files} files"
-        self.total_size_ref.current.value = f"{total_size} B"
+        self.total_size_ref.current.value = size(total_size)
         self.page.update()
 
     def __create_upload_status__(self):
