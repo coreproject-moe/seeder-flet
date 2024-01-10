@@ -2,7 +2,8 @@ import flet as ft
 from lib.views import LoginView, UploadView
 
 def main(page: ft.Page):
-    page.window_frameless = True
+    page.window_title_bar_hidden = True
+    page.window_title_bar_buttons_hidden = True
     # configure custom fonts
     page.fonts = {
         "Kokoro": "fonts/Kokoro/Regular.ttf",
@@ -38,6 +39,14 @@ def main(page: ft.Page):
                             title=ft.Image(src="/icons/logo.png", height=25),
                             center_title=True,
                             bgcolor = "#03020c",
+                            automatically_imply_leading=False,
+                            leading=ft.IconButton(
+                                icon=ft.icons.ARROW_BACK,
+                                icon_size=30,
+                                scale=0.75,
+                                # event
+                                on_click=lambda _: page.go("/"),
+                            ),
                         ),
                         UploadView()
                     ],
