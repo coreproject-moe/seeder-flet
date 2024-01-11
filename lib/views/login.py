@@ -15,6 +15,9 @@ class LoginView(ft.GridView):
         self.runs_count = 2
         self.padding = 0
         # create view
+        if self.page.client_storage.get("tokens"):
+            self.page.go("/upload")
+
         self.__create_view__()
 
     def __create_form__(self) -> ft.Container:

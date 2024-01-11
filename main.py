@@ -2,6 +2,7 @@ import flet as ft
 from lib.views import LoginView, UploadView
 from lib.components.appbar import custom_appbar
 
+
 def main(page: ft.Page):
     page.window_title_bar_hidden = True
     page.window_title_bar_buttons_hidden = True
@@ -16,7 +17,7 @@ def main(page: ft.Page):
         color_scheme=ft.ColorScheme(
             tertiary_container="#1E2036",
             secondary="#03020c",
-        )
+        ),
     )
     page.update()
 
@@ -26,15 +27,13 @@ def main(page: ft.Page):
         page.views.append(
             ft.View(
                 "/",
-                [
-                    custom_appbar(),
-                    LoginView(page)
-                ],
+                [custom_appbar(), LoginView(page)],
                 bgcolor="#03020c",
                 padding=0,
             )
         )
         if page.route == "/upload":
+            page.client_storage.remove("tokens")
             page.views.append(
                 ft.View(
                     "/",
@@ -49,14 +48,14 @@ def main(page: ft.Page):
                                 on_click=lambda _: page.go("/"),
                             ),
                         ),
-                        UploadView(page)
+                        UploadView(page),
                     ],
                     bgcolor="#03020c",
                     padding=0,
                 )
             )
         page.update()
-    
+
     def view_pop(view):
         page.views.pop()
         top_view = page.views[-1]
@@ -65,5 +64,6 @@ def main(page: ft.Page):
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     page.go(page.route)
-    
+
+
 ft.app(target=main, assets_dir="assets/")
