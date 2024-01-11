@@ -15,6 +15,7 @@ class UploadView(ft.Column):
         self.total_files_ref = ft.Ref[ft.Text]()
         self.total_size_ref = ft.Ref[ft.Text]()
         self.data_table_ref = ft.Ref[ft.DataTable]()
+        self.progress_bar_ref = ft.Ref[ft.ProgressBar]()
 
         self.__create_view__()
 
@@ -22,6 +23,8 @@ class UploadView(ft.Column):
         # Handle enpty files
         if e.files is None:
             return
+
+        self.progress_bar_ref.current.value = None
 
         files = len(e.files)
         total_size = sum(file.size for file in e.files)
@@ -45,10 +48,11 @@ class UploadView(ft.Column):
         return ft.Column(
             controls=[
                 ft.ProgressBar(
+                    ref=self.progress_bar_ref,
                     height=10,
                     color=ft.colors.BLUE_ACCENT,
                     bgcolor=ft.colors.TERTIARY_CONTAINER,
-                    value=0.5,
+                    value=0,
                 ),
                 ft.Column(
                     controls=[
