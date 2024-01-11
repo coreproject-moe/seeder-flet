@@ -4,7 +4,7 @@ from hurry.filesize import size
 
 class UploadView(ft.Column):
     def __init__(self, page: ft.Page, *args, **kwargs):
-        super(UploadView, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.page = page
         # file picker
