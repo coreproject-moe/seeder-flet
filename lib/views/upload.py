@@ -119,11 +119,81 @@ class UploadView(ft.Column):
                 padding=ft.padding.symmetric(horizontal=100, vertical=25),
             ),
             ft.Container(
-                content=ft.Divider(),
+                content=ft.Column(
+                    controls=[
+                        ft.Divider(),
+                        ft.Row(
+                            controls=[
+                                ft.Row(
+                                    controls=[
+                                        ft.TextField(
+                                            label="Search",
+                                            filled=True,
+                                            bgcolor=ft.colors.TERTIARY_CONTAINER,
+                                            label_style=ft.TextStyle(
+                                                size=12,
+                                            ),
+                                            height=40,
+                                            content_padding=ft.padding.symmetric(horizontal=20, vertical=5),
+                                            text_size=13,
+                                            prefix_icon=ft.icons.SEARCH,
+                                            border_radius=10,
+                                        ),
+                                        ft.ElevatedButton(
+                                            text="New folder",
+                                            bgcolor=ft.colors.TRANSPARENT,
+                                            style=ft.ButtonStyle(
+                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                            ),
+                                            height=40,
+                                            icon=ft.icons.ADD,
+                                            icon_color=ft.colors.BLUE_200,
+                                        )
+                                    ]
+                                ),
+                                ft.Row(
+                                    controls=[
+                                        ft.ElevatedButton(
+                                            text="Rename",
+                                            bgcolor=ft.colors.TRANSPARENT,
+                                            style=ft.ButtonStyle(
+                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                            ),
+                                            height=40,
+                                            icon=ft.icons.EDIT,
+                                            icon_color=ft.colors.BLUE_200,
+                                        ),
+                                        ft.ElevatedButton(
+                                            text="Edit Details",
+                                            bgcolor=ft.colors.TRANSPARENT,
+                                            style=ft.ButtonStyle(
+                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                            ),
+                                            height=40,
+                                            icon=ft.icons.EDIT,
+                                            icon_color=ft.colors.BLUE_200,
+                                        ),
+                                        ft.ElevatedButton(
+                                            text="Delete",
+                                            bgcolor=ft.colors.TRANSPARENT,
+                                            style=ft.ButtonStyle(
+                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                            ),
+                                            height=40,
+                                            icon=ft.icons.DELETE,
+                                            icon_color=ft.colors.BLUE_200,
+                                        )
+                                    ]
+                                )
+                            ],
+                            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                        )
+                    ]
+                ),
                 padding=ft.padding.symmetric(horizontal=50),
             ),
             ft.Container(
                 content=self.__create_data_table__(),
-                padding=ft.padding.symmetric(horizontal=50, vertical=25),
+                padding=ft.padding.symmetric(horizontal=50, vertical=10),
             )
         ]
