@@ -106,6 +106,8 @@ class UploadView(ft.Column):
         )
 
     def __create_view__(self):
+        self.expand = 1
+        self.scroll = ft.ScrollMode.ALWAYS
         self.controls = [
             ft.Container(
                 content=ft.Row(
