@@ -23,18 +23,18 @@ def main(page: ft.Page):
     # views
     def route_change(route):
         page.views.clear()
-        # page.views.append(
-        #     ft.View(
-        #         "/",
-        #         [
-        #             custom_appbar(),
-        #             LoginView(page)
-        #         ],
-        #         bgcolor="#03020c",
-        #         padding=0,
-        #     )
-        # )
-        if page.route == "/":
+        page.views.append(
+            ft.View(
+                "/",
+                [
+                    custom_appbar(),
+                    LoginView(page)
+                ],
+                bgcolor="#03020c",
+                padding=0,
+            )
+        )
+        if page.route == "/upload":
             page.views.append(
                 ft.View(
                     "/",
