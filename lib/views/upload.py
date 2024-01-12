@@ -1,6 +1,6 @@
 import flet as ft
-from hurry.filesize import size
 from flet_core.file_picker import FilePickerFile
+import humanize
 
 
 class UploadView(ft.Column):
@@ -36,7 +36,7 @@ class UploadView(ft.Column):
         total_size = sum(file.size for file in e.files)
 
         self.total_files_ref.current.value = f"{files} files"
-        self.total_size_ref.current.value = size(total_size)
+        self.total_size_ref.current.value = humanize.naturalsize(total_size)
 
         self.uploaded_files.extend(e.files)
         self.construct_data_table(e.files)
@@ -50,7 +50,7 @@ class UploadView(ft.Column):
                     ft.DataRow(
                         [
                             ft.DataCell(ft.Text(value=file.name)),
-                            ft.DataCell(ft.Text(size(file.size))),
+                            ft.DataCell(ft.Text(humanize.naturalsize(file.size))),
                         ],
                         data=file.name,
                     )
