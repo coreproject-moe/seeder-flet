@@ -33,6 +33,7 @@ def main(page: ft.Page):
             )
         )
         if event.route == "/upload":
+
             page.client_storage.remove("tokens")
             page.views.append(
                 ft.View(
