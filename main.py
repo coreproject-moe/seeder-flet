@@ -22,7 +22,7 @@ def main(page: ft.Page):
     page.update()
 
     # views
-    def route_change(route):
+    def route_change(event: ft.RouteChangeEvent):
         page.views.clear()
         page.views.append(
             ft.View(
@@ -32,7 +32,8 @@ def main(page: ft.Page):
                 padding=0,
             )
         )
-        if page.route == "/upload":
+        if event.route == "/upload":
+
             page.client_storage.remove("tokens")
             page.views.append(
                 ft.View(
