@@ -1,9 +1,10 @@
 import flet as ft
 from hurry.filesize import size
 
+
 class UploadView(ft.Column):
     def __init__(self, page: ft.Page, *args, **kwargs):
-        super(UploadView,  self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.page = page
         # file picker
@@ -14,22 +15,31 @@ class UploadView(ft.Column):
         self.total_files_ref = ft.Ref[ft.Text]()
         self.total_size_ref = ft.Ref[ft.Text]()
         self.data_table_ref = ft.Ref[ft.DataTable]()
+        self.progress_bar_ref = ft.Ref[ft.ProgressBar]()
 
         self.__create_view__()
 
     def __pick_files_result(self, e: ft.FilePickerResultEvent):
+        # Handle enpty files
+        if e.files is None:
+            return
+
+        self.progress_bar_ref.current.value = None
+
         files = len(e.files)
         total_size = sum(file.size for file in e.files)
 
         self.total_files_ref.current.value = f"{files} files"
         self.total_size_ref.current.value = size(total_size)
-        
+
         for file in e.files:
             self.data_table_ref.current.rows.append(
-                ft.DataRow([
-                    ft.DataCell(ft.Text(value=file.name)),
-                    ft.DataCell(ft.Text(size(file.size))),
-                ])
+                ft.DataRow(
+                    [
+                        ft.DataCell(ft.Text(value=file.name)),
+                        ft.DataCell(ft.Text(size(file.size))),
+                    ]
+                )
             )
 
         self.page.update()
@@ -38,17 +48,22 @@ class UploadView(ft.Column):
         return ft.Column(
             controls=[
                 ft.ProgressBar(
+                    ref=self.progress_bar_ref,
                     height=10,
                     color=ft.colors.BLUE_ACCENT,
                     bgcolor=ft.colors.TERTIARY_CONTAINER,
-                    value=0.5,
+                    value=0,
                 ),
                 ft.Column(
                     controls=[
-                        ft.Text(ref=self.total_size_ref, value="0 B", font_family="Kokoro-Bold"),
-                        ft.Text(ref=self.total_files_ref, value="0 files")
+                        ft.Text(
+                            ref=self.total_size_ref,
+                            value="0 B",
+                            font_family="Kokoro-Bold",
+                        ),
+                        ft.Text(ref=self.total_files_ref, value="0 files"),
                     ],
-                    spacing=0
+                    spacing=0,
                 ),
             ],
             expand=1,
@@ -71,14 +86,20 @@ class UploadView(ft.Column):
                     ),
                     ft.Column(
                         controls=[
-                            ft.Text(value="Browse files", size=17, font_family="Kokoro-Medium"),
-                            ft.Divider(color=ft.colors.with_opacity(0.25, "white"), height=10),
+                            ft.Text(
+                                value="Browse files",
+                                size=17,
+                                font_family="Kokoro-Medium",
+                            ),
+                            ft.Divider(
+                                color=ft.colors.with_opacity(0.25, "white"), height=10
+                            ),
                             ft.Text(value="Upload", size=13, opacity=0.75),
                         ],
                         spacing=0,
                         alignment=ft.MainAxisAlignment.CENTER,
-                        width=100
-                    )
+                        width=100,
+                    ),
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
             ),
@@ -94,9 +115,7 @@ class UploadView(ft.Column):
                 heading_row_color=ft.colors.SECONDARY,
                 show_checkbox_column=True,
                 columns=[
-                    ft.DataColumn(
-                        ft.Text("File Name")
-                    ),
+                    ft.DataColumn(ft.Text("File Name")),
                     ft.DataColumn(
                         ft.Text("File Size"),
                         numeric=True,
@@ -113,7 +132,7 @@ class UploadView(ft.Column):
                 content=ft.Row(
                     controls=[
                         self.__create_upload_status__(),
-                        self.__create_upload_area__()
+                        self.__create_upload_area__(),
                     ],
                     spacing=100,
                     alignment=ft.MainAxisAlignment.CENTER,
@@ -136,7 +155,9 @@ class UploadView(ft.Column):
                                                 size=12,
                                             ),
                                             height=40,
-                                            content_padding=ft.padding.symmetric(horizontal=20, vertical=5),
+                                            content_padding=ft.padding.symmetric(
+                                                horizontal=20, vertical=5
+                                            ),
                                             text_size=13,
                                             prefix_icon=ft.icons.SEARCH,
                                             border_radius=10,
@@ -145,12 +166,16 @@ class UploadView(ft.Column):
                                             text="New folder",
                                             bgcolor=ft.colors.TRANSPARENT,
                                             style=ft.ButtonStyle(
-                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                                shape={
+                                                    ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(
+                                                        radius=10
+                                                    )
+                                                },
                                             ),
                                             height=40,
                                             icon=ft.icons.ADD,
                                             icon_color=ft.colors.BLUE_200,
-                                        )
+                                        ),
                                     ]
                                 ),
                                 ft.Row(
@@ -159,7 +184,11 @@ class UploadView(ft.Column):
                                             text="Rename",
                                             bgcolor=ft.colors.TRANSPARENT,
                                             style=ft.ButtonStyle(
-                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                                shape={
+                                                    ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(
+                                                        radius=10
+                                                    )
+                                                },
                                             ),
                                             height=40,
                                             icon=ft.icons.EDIT,
@@ -169,7 +198,11 @@ class UploadView(ft.Column):
                                             text="Edit Details",
                                             bgcolor=ft.colors.TRANSPARENT,
                                             style=ft.ButtonStyle(
-                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                                shape={
+                                                    ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(
+                                                        radius=10
+                                                    )
+                                                },
                                             ),
                                             height=40,
                                             icon=ft.icons.EDIT,
@@ -179,17 +212,21 @@ class UploadView(ft.Column):
                                             text="Delete",
                                             bgcolor=ft.colors.TRANSPARENT,
                                             style=ft.ButtonStyle(
-                                                shape={ ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(radius=10) },
+                                                shape={
+                                                    ft.MaterialState.DEFAULT: ft.RoundedRectangleBorder(
+                                                        radius=10
+                                                    )
+                                                },
                                             ),
                                             height=40,
                                             icon=ft.icons.DELETE,
                                             icon_color=ft.colors.BLUE_200,
-                                        )
+                                        ),
                                     ]
-                                )
+                                ),
                             ],
                             alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
-                        )
+                        ),
                     ]
                 ),
                 padding=ft.padding.symmetric(horizontal=50),
@@ -197,5 +234,5 @@ class UploadView(ft.Column):
             ft.Container(
                 content=self.__create_data_table__(),
                 padding=ft.padding.symmetric(horizontal=50, vertical=10),
-            )
+            ),
         ]
