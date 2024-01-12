@@ -4,8 +4,6 @@ from lib.components.appbar import custom_appbar
 
 
 def main(page: ft.Page):
-    page.window_title_bar_hidden = True
-    page.window_title_bar_buttons_hidden = True
     # configure custom fonts
     page.fonts = {
         "Kokoro": "fonts/Kokoro/Regular.ttf",
