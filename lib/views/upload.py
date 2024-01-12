@@ -1,5 +1,6 @@
 import flet as ft
 from hurry.filesize import size
+from lib.functions.boyer_moore_string_search import search
 
 
 class UploadView(ft.Column):
@@ -38,7 +39,8 @@ class UploadView(ft.Column):
                     [
                         ft.DataCell(ft.Text(value=file.name)),
                         ft.DataCell(ft.Text(size(file.size))),
-                    ]
+                    ],
+                    data=file.name,
                 )
             )
 
@@ -103,8 +105,23 @@ class UploadView(ft.Column):
                 ],
                 alignment=ft.MainAxisAlignment.CENTER,
             ),
-            on_click=lambda _: self.file_picker.pick_files(allow_multiple=True),
+            on_click=lambda _: self.file_picker.pick_files(
+                allow_multiple=True,
+                allowed_extensions=[
+                    "mp4",
+                    "mkv",
+                ],
+            ),
         )
+
+    def _handle_serach_event_(self, event: ft.ControlEvent):
+        if event.data == "":
+            return
+
+        for item in self.data_table_ref.current.rows:
+            if not search(item.data, event.data):
+                # Hide rows
+                pass
 
     def __create_data_table__(self):
         return ft.Container(
@@ -161,6 +178,7 @@ class UploadView(ft.Column):
                                             text_size=13,
                                             prefix_icon=ft.icons.SEARCH,
                                             border_radius=10,
+                                            on_change=self._handle_serach_event_,
                                         ),
                                         ft.ElevatedButton(
                                             text="New folder",
