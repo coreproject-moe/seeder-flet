@@ -1,6 +1,6 @@
 import flet as ft
 from hurry.filesize import size
-from lib.functions.boyer_moore_string_search import search
+from flet_core.file_picker import FilePickerFile
 
 
 class UploadView(ft.Column):
@@ -17,6 +17,10 @@ class UploadView(ft.Column):
         self.total_size_ref = ft.Ref[ft.Text]()
         self.data_table_ref = ft.Ref[ft.DataTable]()
         self.progress_bar_ref = ft.Ref[ft.ProgressBar]()
+        self.search_bar_ref = ft.Ref[ft.TextField]()
+
+        # files
+        self.uploaded_files: list[FilePickerFile] = []
 
         self.__create_view__()
 
@@ -25,6 +29,7 @@ class UploadView(ft.Column):
         if e.files is None:
             return
 
+        self.search_bar_ref.current.disabled = False
         self.progress_bar_ref.current.value = None
 
         files = len(e.files)
@@ -33,17 +38,23 @@ class UploadView(ft.Column):
         self.total_files_ref.current.value = f"{files} files"
         self.total_size_ref.current.value = size(total_size)
 
-        for file in e.files:
-            self.data_table_ref.current.rows.append(
-                ft.DataRow(
-                    [
-                        ft.DataCell(ft.Text(value=file.name)),
-                        ft.DataCell(ft.Text(size(file.size))),
-                    ],
-                    data=file.name,
-                )
-            )
+        self.uploaded_files.extend(e.files)
+        self.construct_data_table(e.files)
 
+    def construct_data_table(self, files: list[FilePickerFile]):
+        self.data_table_ref.current.rows.clear()
+
+        if not len(files) == 0:
+            for file in files:
+                self.data_table_ref.current.rows.append(
+                    ft.DataRow(
+                        [
+                            ft.DataCell(ft.Text(value=file.name)),
+                            ft.DataCell(ft.Text(size(file.size))),
+                        ],
+                        data=file.name,
+                    )
+                )
         self.page.update()
 
     def __create_upload_status__(self):
@@ -116,12 +127,15 @@ class UploadView(ft.Column):
 
     def _handle_serach_event_(self, event: ft.ControlEvent):
         if event.data == "":
-            return
+            searched_list = self.uploaded_files
+        else:
+            searched_list: list[FilePickerFile] = []
 
-        for item in self.data_table_ref.current.rows:
-            if not search(item.data, event.data):
-                # Hide rows
-                pass
+            for item in self.uploaded_files:
+                if event.data.lower() in item.name.lower():
+                    searched_list.append(item)
+
+        self.construct_data_table(searched_list)
 
     def __create_data_table__(self):
         return ft.Container(
@@ -166,6 +180,8 @@ class UploadView(ft.Column):
                                     controls=[
                                         ft.TextField(
                                             label="Search",
+                                            ref=self.search_bar_ref,
+                                            disabled=True,
                                             filled=True,
                                             bgcolor=ft.colors.TERTIARY_CONTAINER,
                                             label_style=ft.TextStyle(
